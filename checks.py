@@ -42,7 +42,7 @@ def existe(world, filename):
 def es_ejecutable(world, filename):
     assert False
 
-@requirement('Al ejecutar el fichero helloworld.py imprime el texto: "Hello World!"')
+@requirement('Al ejecutar el fichero "helloworld.py" imprime el texto: "Hello World!"')
 def imprime_hello_world(world):
     assert False
 
