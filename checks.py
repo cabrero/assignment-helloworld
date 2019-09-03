@@ -18,14 +18,6 @@ def pattern2regexp(pattern):
     return re.compile(regexp)
 
 
-def get_check(text, module):
-    for regexp, builder in module.__checks__:
-        match = regexp.fullmatch(text)
-        if match is not None:
-            return builder(match)
-    return None
-
-    
 def requirement(pattern):
     regexp = pattern2regexp(pattern)
     def decorator(f):
