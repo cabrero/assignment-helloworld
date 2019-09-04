@@ -7,7 +7,7 @@ from ipmrunner.checks import requirement
 
 @requirement("Existe un fichero llamado {filename}")
 def existe(world, filename):
-    assert Path(filname).exists()
+    assert Path(filename).exists()
 
 @requirement("El fichero {filename} es ejecutable")
 def es_ejecutable(world, filename):
