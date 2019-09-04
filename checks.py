@@ -1,42 +1,13 @@
 # coding: utf-8
 
-import sys
-import ast
-import re
-
-def pattern2regexp(pattern):
-    tree = ast.parse(f"f'{pattern}'")
-    values = tree.body[0].value.values
-    regexp = ""
-    for value in values:
-        if isinstance(value, ast.Str):
-            regexp += value.s
-        elif isinstance(value, ast.FormattedValue) and isinstance(value.value, ast.Name):
-            regexp += f"(?P<{value.value.id}>.+)"
-        else:
-            raise SyntaxError(pattern)
-    return re.compile(regexp)
+from pathlib import Path
 
 
-def requirement(pattern):
-    regexp = pattern2regexp(pattern)
-    def decorator(f):
-        def check_builder(match):
-            return lambda world: f(world, **match.groupdict())
-
-        module = sys.modules[f.__module__]
-        if not hasattr(module, "__checks__"):
-            module.__checks__ = []
-        module.__checks__.append((regexp, check_builder))
-        return f
-    return decorator
-
-
-# ----------------------------------------------------------------------
+from ipmrunner.checks import requirement
 
 @requirement("Existe un fichero llamado {filename}")
 def existe(world, filename):
-    assert False
+    assert Path(filname).exists()
 
 @requirement("El fichero {filename} es ejecutable")
 def es_ejecutable(world, filename):
